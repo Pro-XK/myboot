@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.proxu.myboot.dao.UserDao">
+    <select id="findListByQuery" parameterType="User" resultMap="resultMap">
+        select
+        id,
+        name
+        from
+        sys_user
+        <where>
+            <trim suffixOverrides="and">
+                <if test="id != null">id=#{id} and </if>
+                <if test="name != null">name=#{name} and </if>
+            </trim>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="User">
+        insert into sys_user(name) value (#{name})
+    </insert>
+
+    <update id="update" parameterType="User">
+        update sys_user set name =#{name} where id = #{id}
+    </update>
+    
+    <resultMap id="resultMap" type="User">
+        <id property="id" javaType="java.lang.Long" column="id"/>
+        <result property="name" javaType="java.lang.String" column="name"/>
+    </resultMap>
+</mapper>
